@@ -1,0 +1,8 @@
+  async get{{ModuleName}}s(c: AuthContext) {
+    return this.execute(c, async () => {
+      let {{moduleName}}s = await prisma.{{moduleName}}.findMany({});
+{{SECTION_HIDE_MANY}}
+      return { {{moduleName}}s };
+    });
+  }
+

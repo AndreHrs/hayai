@@ -1,0 +1,40 @@
+// IMPORTANT: Set up test database BEFORE any Prisma imports
+import { configureTestFileDatabase, setupTestFileDatabase } from "./testFileDatabase";
+configureTestFileDatabase("{{moduleName}}");
+
+import { describe, it, expect, beforeAll, afterAll } from "bun:test";
+import { app } from "../index";
+import {
+  createTestUser,
+  loginTestUser,
+  getAuthHeaders,
+  cleanupTestUser,
+} from "./baseTest";
+
+// Set up isolated database schema for this test file
+beforeAll(async () => {
+  await setupTestFileDatabase("{{moduleName}}");
+});
+
+describe("{{ModuleName}} CRUD Operations", () => {
+  let testUser: any;
+  let authToken: string;
+  let createdId: string = "";
+
+  beforeAll(async () => {
+    testUser = await createTestUser();
+    authToken = testUser.token;
+  });
+
+  afterAll(async () => {
+    if (testUser) {
+      await cleanupTestUser(testUser.email);
+    }
+  });
+
+{{SECTION_TEST_CASES}}
+
+  //SECTION::VALIDATOR_CASES
+{{SECTION_VALIDATORS}}
+});
+

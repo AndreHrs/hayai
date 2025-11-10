@@ -1,0 +1,20 @@
+{
+  "String": {
+    "email": ".email()",
+    "alphanum": ".regex(/^[A-Za-z0-9]+$/)",
+    "number_only": ".regex(/^[0-9]+$/)",
+    "alpha_only": ".regex(/^[A-Za-z]+$/)",
+    "length>=": ".min({{n}})",
+    "length<=": ".max({{n}})",
+    "contain_number": ".regex(/.*[0-9].*/)",
+    "contain_symbol": ".regex(/.*[^A-Za-z0-9].*/)"
+  },
+  "Int": {
+    "min>=": ".min({{n}})",
+    "max<=": ".max({{n}})"
+  },
+  "Float": {
+    "min>=": ".min({{n}})",
+    "max<=": ".max({{n}})"
+  }
+}

@@ -1,0 +1,13 @@
+  async create{{ModuleName}}(c: AuthContext) {
+    const body = this.getValidJson<Create{{ModuleName}}Input>(c);
+    return this.execute(c, async () => {
+      const {{moduleName}} = await prisma.{{moduleName}}.create({
+        data: {
+{{SECTION_CREATE_ASSIGNMENTS}}
+        },
+      });
+{{SECTION_HIDE_SINGLE}}
+      return { {{moduleName}} };
+    }, "{{ModuleName}} created successfully", 201);
+  }
+

@@ -1,0 +1,36 @@
+{
+  "name": "hayai",
+  "version": "0.1.0",   
+  "description": "A Bun-powered code generator for Hono + Prisma projects.",
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "dev": "bun run --hot src/index.ts",
+    "test:setup": "NODE_ENV=test bun run src/tests/_generateTestClient.ts",
+    "test:restore": "bun run src/tests/_generateTestClient.ts --restore-production",
+    "test": "bun run test:setup && NODE_ENV=test bun test && bun run test:restore",
+    "test:parallel": "bun run test:setup && NODE_ENV=test bun test && bun run test:restore",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx}\"",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:migrate:reset": "rm -rf prisma/migrations && echo '✔ Migrations directory removed. Run \"bun db:migrate\" to create new migrations.'",
+    "db:studio": "prisma studio",
+    "db:seed": "bun run prisma/seed.ts"
+  },
+  "dependencies": {
+    "@hono/zod-validator": "^0.7.4",
+    "@prisma/client": "^5.20.0",
+    "bcrypt": "^5.1.1",
+    "hono": "^4.10.4",
+    "jose": "^5.9.6",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/bun": "latest",
+    "@types/prettier": "^3.0.0",
+    "prettier": "^3.6.2",
+    "prisma": "^5.20.0"
+  }
+}

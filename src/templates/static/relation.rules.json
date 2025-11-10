@@ -1,0 +1,6 @@
+{
+  "onDelete": "Cascade",
+  "backRefSuffix": "s",
+  "defaultRelationField": "Rel"
+}
+

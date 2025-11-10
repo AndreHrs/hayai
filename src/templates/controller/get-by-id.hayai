@@ -1,0 +1,8 @@
+  async get{{ModuleName}}(c: AuthContext) {
+    const {{SECTION_PK_NAME}} = c.req.param("{{SECTION_PK_NAME}}");
+    let {{moduleName}} = await prisma.{{moduleName}}.findUnique({ where: { {{SECTION_PK_JSON}}: {{SECTION_PK_NAME}} } });
+    if (!{{moduleName}}) return this.fail(c, "{{ModuleName}} not found", 404);
+{{SECTION_HIDE_SINGLE}}
+    return this.success(c, { {{moduleName}} });
+  }
+

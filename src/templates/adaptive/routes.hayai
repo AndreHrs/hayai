@@ -1,0 +1,19 @@
+//SECTION::IMPORTATIONS
+import { Hono } from "hono";
+import { authMiddleware } from "../middlewares/auth";
+import {
+  create{{ModuleName}},
+  get{{ModuleName}}s,
+  get{{ModuleName}},
+  update{{ModuleName}},
+  delete{{ModuleName}},
+} from "../controllers";
+import { validateSchema } from "../core/validator";
+import { create{{ModuleName}}Schema, update{{ModuleName}}Schema } from "../schemas";
+
+//SECTION::ROUTES
+const {{moduleName}}Routes = new Hono();
+{{SECTION_PUBLIC_ROUTES}}
+{{SECTION_PROTECTED_ROUTES}}
+export default {{moduleName}}Routes;
+

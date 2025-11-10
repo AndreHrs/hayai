@@ -1,0 +1,23 @@
+//SECTION::IMPORTATIONS
+import { prisma } from "../db";
+import type { AuthContext } from "../middlewares/auth";
+import { BaseController } from "../core/BaseController";
+import type { z } from "zod";
+import type {
+  create{{ModuleName}}Schema,
+  update{{ModuleName}}Schema,
+} from "../schemas/{{moduleName}}Schema";
+{{SECTION_IMPORTS_EXTRA}}
+
+type Create{{ModuleName}}Input = z.infer<typeof create{{ModuleName}}Schema>;
+type Update{{ModuleName}}Input = z.infer<typeof update{{ModuleName}}Schema>;
+
+class {{ModuleName}}Controller extends BaseController {
+  //SECTION::CRUD
+{{SECTION_CRUD_METHODS}}
+}
+
+//SECTION::EXPORTS
+const {{moduleName}}Controller = new {{ModuleName}}Controller();
+{{SECTION_EXPORTS}}
+

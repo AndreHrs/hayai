@@ -1,0 +1,18 @@
+  async update{{ModuleName}}(c: AuthContext) {
+    const {{SECTION_PK_NAME}} = c.req.param("{{SECTION_PK_NAME}}");
+    const body = this.getValidJson<Update{{ModuleName}}Input>(c);
+    const existing = await prisma.{{moduleName}}.findUnique({ where: { {{SECTION_PK_JSON}}: {{SECTION_PK_NAME}} } });
+    if (!existing) return this.fail(c, "{{ModuleName}} not found", 404);
+    return this.execute(c, async () => {
+      const data = { ...(body as any) };
+{{SECTION_UPDATE_STRIP_FORBIDDEN}}
+{{SECTION_UPDATE_HASH_ASSIGNMENTS}}
+      const {{moduleName}} = await prisma.{{moduleName}}.update({
+        where: { {{SECTION_PK_JSON}}: {{SECTION_PK_NAME}} },
+        data,
+      });
+{{SECTION_HIDE_SINGLE}}
+      return { {{moduleName}} };
+    }, "{{ModuleName}} updated successfully");
+  }
+

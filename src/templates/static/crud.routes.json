@@ -1,0 +1,28 @@
+{
+  "get-all": {
+    "method": "GET",
+    "path": "/{{tableName}}",
+    "controller": "getAll"
+  },
+  "get-single": {
+    "method": "GET",
+    "path": "/{{tableName}}/:id",
+    "controller": "getById"
+  },
+  "create": {
+    "method": "POST",
+    "path": "/{{tableName}}",
+    "controller": "create"
+  },
+  "update": {
+    "method": "PUT",
+    "path": "/{{tableName}}/:id",
+    "controller": "update"
+  },
+  "delete": {
+    "method": "DELETE",
+    "path": "/{{tableName}}/:id",
+    "controller": "delete"
+  }
+}
+

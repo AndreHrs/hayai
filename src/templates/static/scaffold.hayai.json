@@ -1,0 +1,23 @@
+{
+  "name": "{{ModuleName}}",
+  "table_name": "{{tableName}}",
+  "fields": [
+    { "name": "id", "type": "String", "primary": true, "default": "uuid()"},
+    { "name": "title", "type": "String", "required": true , "validator":["alphanum", "length>=3", "length<=32"]},
+    { "name": "content", "type": "String", "required": true , "validator":["length>=10", "length<=1024"]},
+    { "name": "code", "type": "String", "required": true , "validator":["number_only", "length>=4", "length<=6"]},
+    { "name": "published", "type": "Boolean", "default": "false" , "validator":["alpha_only"]},
+    { "name": "email", "type": "String", "required": true, "validator": ["email", "length>=5", "length<=128"] },
+    { "name": "userId", "type": "String", "relation": "User.id", "required": true , "validator":[]}
+  ],
+  "routes": {
+    "get-all": { "endpoint": "/{{tableName}}", "method": "GET" },
+    "get-single": { "endpoint": "/{{tableName}}/:id", "method": "GET" },
+    "create": { "endpoint": "/{{tableName}}", "method": "POST", "auth_required": true },
+    "update": { "endpoint": "/{{tableName}}/:id", "method": "PUT", "auth_required": true , "check_ownership": true},
+    "delete": { "endpoint": "/{{tableName}}/:id", "method": "DELETE", "auth_required": true , "check_ownership": true},
+    "update-admin": { "endpoint": "/{{tableName}}/admin/:id", "method": "PUT", "auth_required": true , "admin_only": true},
+    "delete-admin": { "endpoint": "/{{tableName}}/admin/:id", "method": "DELETE", "auth_required": true , "admin_only": true}
+  }
+}
+

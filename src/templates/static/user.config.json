@@ -1,0 +1,14 @@
+{
+  "name": "User",
+  "table_name": "users",
+  "fields": [
+    { "name": "id", "type": "String", "primary": true, "default": "uuid()" },
+    { "name": "username", "type": "String", "required": true, "unique": true },
+    { "name": "email", "type": "String", "required": true, "unique": true },
+    { "name": "password", "type": "String", "required": true },
+    { "name": "role", "type": "String", "required": true, "default": "\"USER\"" },
+    { "name": "createdAt", "type": "DateTime", "default": "now()" },
+    { "name": "updatedAt", "type": "DateTime", "default": "now()" }
+  ]
+}
+

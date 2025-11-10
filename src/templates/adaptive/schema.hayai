@@ -1,0 +1,10 @@
+import { z } from "zod";
+
+export const create{{ModuleName}}Schema = z.object({
+{{SECTION_CREATE_FIELDS}}
+});
+
+export const update{{ModuleName}}Schema = z.object({
+{{SECTION_UPDATE_FIELDS}}
+});
+

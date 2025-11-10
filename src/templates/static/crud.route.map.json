@@ -1,0 +1,30 @@
+{
+  "create": {
+    "template": "controller/create.hayai",
+    "exportName": "create",
+    "exportSuffix": ""
+  },
+  "get-all": {
+    "template": "controller/get-all.hayai",
+    "exportName": "get",
+    "exportSuffix": "s"
+  },
+  "get-single": {
+    "template": "controller/get-by-id.hayai",
+    "exportName": "get",
+    "exportSuffix": ""
+  },
+  "update": {
+    "template": "controller/update.hayai",
+    "exportName": "update",
+    "exportSuffix": "",
+    "supportsOwnership": true
+  },
+  "delete": {
+    "template": "controller/delete.hayai",
+    "exportName": "delete",
+    "exportSuffix": "",
+    "supportsOwnership": true
+  }
+}
+
