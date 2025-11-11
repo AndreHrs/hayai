@@ -41,7 +41,6 @@
   },
   "files": [
     "dist/",
-    "src/templates/",
     "README.md",
     "package.json"
   ]
