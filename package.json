@@ -1,19 +1,21 @@
 {
-  "name": "hayai",
+  "name": "hayai-cli",
   "version": "0.1.0",
-  "description": "A Bun-powered code generator for Hono + Prisma projects.",
+  "description": "Fast Boilerplate & API Generator for Bun + Hono + Prisma",
   "author": "Andre Harsono andre_harsono@outlook.com",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AndreHrs/hayai"
+    "url": "https://github.com/AndreHrs/hayai.git"
   },
   "bin": {
-    "hayai": "./src/cli/index.ts",
-    "fast": "./src/cli/index.ts"
+    "hayai": "./dist/hayai",
+    "fast": "./dist/hayai"
   },
   "scripts": {
-    "dev": "bun run --hot src/index.ts"
+    "build": "bun build ./src/cli/index.ts --compile --outfile dist/hayai && bun run copy-templates",
+    "copy-templates": "mkdir -p dist/templates && cp -r src/templates/* dist/templates/",
+    "prepublishOnly": "bun run build"
   },
   "dependencies": {
     "dotenv": "^17.2.3",
@@ -30,5 +32,17 @@
     "code-generator",
     "boilerplate",
     "typescript"
+  ],
+  "engines": {
+    "bun": ">=1.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist/",
+    "src/templates/",
+    "README.md",
+    "package.json"
   ]
 }

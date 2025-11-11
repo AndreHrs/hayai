@@ -7,7 +7,6 @@ import {
   readFileSync,
 } from "fs";
 import { resolve, dirname } from "path";
-import { fileURLToPath } from "url";
 import { parse } from "dotenv";
 import {
   parseHayaiJson,
@@ -30,18 +29,42 @@ import { MARKERS } from "../constants/markers";
 import { TEMPLATES_DIR } from "../constants/paths";
 import { MESSAGES } from "../constants/messages";
 
-const PKG_TEMPLATES_ROOT = resolve(
-  dirname(fileURLToPath(import.meta.url)),
+const envTemplatesRoot = Bun.env.HAYAI_TEMPLATES_ROOT
+  ? resolve(Bun.env.HAYAI_TEMPLATES_ROOT)
+  : null;
+
+const defaultTemplatesRoot = resolve(
+  dirname(process.execPath),
   "..",
+  "src",
   "templates"
 );
+
+const TEMPLATES_ROOT = envTemplatesRoot ?? defaultTemplatesRoot;
+
+if (!existsSync(TEMPLATES_ROOT)) {
+  log.error("Hayai templates directory not found.");
+  log.error(
+    `Looked for: ${envTemplatesRoot ?? defaultTemplatesRoot}`
+  );
+  if (envTemplatesRoot) {
+    log.error(
+      `Environment override HAYAI_TEMPLATES_ROOT="${Bun.env.HAYAI_TEMPLATES_ROOT}" was provided but not found.`
+    );
+  } else {
+    log.error(
+      `Ensure the templates directory exists relative to the Hayai binary or set HAYAI_TEMPLATES_ROOT accordingly.`
+    );
+  }
+  process.exit(1);
+}
 
 function usage() {
   log.info(MESSAGES.usage);
 }
 
 function copyEnvExample(cwd: string) {
-  const example = resolve(PKG_TEMPLATES_ROOT, "env.example");
+  const example = resolve(TEMPLATES_ROOT, "env.example");
   const dest = resolve(cwd, ".env");
   if (existsSync(example) && !existsSync(dest)) {
     copyFileSync(example, dest);
@@ -78,8 +101,8 @@ function ensurePrismaHeader(cwd: string, provider: string) {
 }
 
 async function initProject(cwd: string, opts?: { overwritePkg?: boolean }) {
-  const srcFrom = resolve(PKG_TEMPLATES_ROOT, "src");
-  const prismaFrom = resolve(PKG_TEMPLATES_ROOT, "prisma");
+  const srcFrom = resolve(TEMPLATES_ROOT, "src");
+  const prismaFrom = resolve(TEMPLATES_ROOT, "prisma");
   const srcTo = resolve(cwd, "src");
   const prismaTo = resolve(cwd, "prisma");
   ensureDir(srcTo);
@@ -93,7 +116,7 @@ async function initProject(cwd: string, opts?: { overwritePkg?: boolean }) {
   // Ensure User model exists in prisma schema
   const schemaPath = resolve(cwd, "prisma/schema.prisma");
   const userConfigPath = resolve(
-    PKG_TEMPLATES_ROOT,
+    TEMPLATES_ROOT,
     "static",
     "user.config.json"
   );
@@ -107,7 +130,7 @@ async function initProject(cwd: string, opts?: { overwritePkg?: boolean }) {
   }
   upsertModel(schemaPath, userConfig, false);
   // Copy template package.json
-  const tplPkg = resolve(PKG_TEMPLATES_ROOT, "package.json");
+  const tplPkg = resolve(TEMPLATES_ROOT, "package.json");
   const outPkg = resolve(cwd, "package.json");
   if (existsSync(tplPkg)) {
     if (!existsSync(outPkg)) {
@@ -150,7 +173,7 @@ function scaffoldModuleJson(cwd: string, name: string) {
     log.error(`Refusing to overwrite existing ${moduleName}.hayai.json`);
     process.exit(1);
   }
-  const tplPath = resolve(PKG_TEMPLATES_ROOT, "static/scaffold.hayai.json");
+  const tplPath = resolve(TEMPLATES_ROOT, "static/scaffold.hayai.json");
   const tpl = readTemplateCached(tplPath);
   if (!tpl) {
     log.error(`Failed to load template: ${tplPath}`);
@@ -455,7 +478,7 @@ async function buildTests(
     overwriteAll || (existsSync(testsDest) ? await ask(testsDest) : true);
   if (testsOverwrite) {
     try {
-      const tplPath = resolve(PKG_TEMPLATES_ROOT, "adaptive/test.hayai");
+      const tplPath = resolve(TEMPLATES_ROOT, "adaptive/test.hayai");
       const tpl = readTemplateCached(tplPath);
       if (!tpl) {
         log.error(`Failed to load test template: ${tplPath}`);
@@ -794,7 +817,7 @@ async function buildOne(
       await buildTests(cfg, ctx, outputRoot, cwd, ask, overwriteAll);
 
       // Ensure latest base test utilities are in place
-      const baseTestTpl = resolve(PKG_TEMPLATES_ROOT, "src/tests/baseTest.ts");
+      const baseTestTpl = resolve(TEMPLATES_ROOT, "src/tests/baseTest.ts");
       const baseTestOut = resolve(outputRoot, "tests/baseTest.ts");
       const shouldWriteBaseTest =
         overwriteAll ||
