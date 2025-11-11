@@ -1,5 +1,5 @@
 {
-  "name": "hayai-cli",
+  "name": "@andrehrs/hayai-cli",
   "version": "0.1.0",
   "description": "Fast Boilerplate & API Generator for Bun + Hono + Prisma",
   "author": "Andre Harsono andre_harsono@outlook.com",

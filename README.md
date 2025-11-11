@@ -188,6 +188,7 @@ Note from the Author
 ---
 > Hayai began as a personal summer break project. Part curiosity with a lot of "let's see if this works."
 > Especially around how code generators works like how PHP artisan did the scaffolding for laravel.
+> Also learning how to publish my own package in npm.
 > I'll maintain it when I can, but semester time might slow updates.
 > Feedback, PRs, or memes about my accidental heresy against Hono's best practices are always welcome.
 > 
