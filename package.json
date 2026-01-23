@@ -1,16 +1,16 @@
 {
   "name": "@andre_hrs/hayai-cli",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Fast Boilerplate & API Generator for Bun + Hono + Prisma",
   "author": "Andre Harsono andre_harsono@outlook.com",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AndreHrs/hayai.git"
+    "url": "git+https://github.com/AndreHrs/hayai.git"
   },
   "bin": {
-    "hayai": "./dist/hayai",
-    "fast": "./dist/hayai"
+    "hayai": "dist/hayai",
+    "fast": "dist/hayai"
   },
   "scripts": {
     "build": "bun build ./src/cli/index.ts --compile --outfile dist/hayai && bun run copy-templates",

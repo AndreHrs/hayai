@@ -44,7 +44,6 @@ const distTemplatesRoot = resolve(
   dirname(process.execPath),
   "..",
   "dist",
-  "src",
   "templates"
 );
 
