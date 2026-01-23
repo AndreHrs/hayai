@@ -40,7 +40,26 @@ const defaultTemplatesRoot = resolve(
   "templates"
 );
 
-const TEMPLATES_ROOT = envTemplatesRoot ?? defaultTemplatesRoot;
+const distTemplatesRoot = resolve(
+  dirname(process.execPath),
+  "..",
+  "dist",
+  "src",
+  "templates"
+);
+
+let TEMPLATES_ROOT = envTemplatesRoot;
+
+if (!TEMPLATES_ROOT) {
+  // Try default path first, then fallback to dist path
+  if (existsSync(defaultTemplatesRoot)) {
+    TEMPLATES_ROOT = defaultTemplatesRoot;
+  } else if (existsSync(distTemplatesRoot)) {
+    TEMPLATES_ROOT = distTemplatesRoot;
+  } else {
+    TEMPLATES_ROOT = defaultTemplatesRoot; // Will be used for error message
+  }
+}
 
 if (!existsSync(TEMPLATES_ROOT)) {
   log.error("Hayai templates directory not found.");
@@ -52,6 +71,12 @@ if (!existsSync(TEMPLATES_ROOT)) {
       `Environment override HAYAI_TEMPLATES_ROOT="${Bun.env.HAYAI_TEMPLATES_ROOT}" was provided but not found.`
     );
   } else {
+    log.error(
+      `Tried: ${defaultTemplatesRoot}`
+    );
+    log.error(
+      `Tried: ${distTemplatesRoot}`
+    );
     log.error(
       `Ensure the templates directory exists relative to the Hayai binary or set HAYAI_TEMPLATES_ROOT accordingly.`
     );
