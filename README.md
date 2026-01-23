@@ -24,19 +24,35 @@ Both work identically, because speed is the whole point.
 ---
 
 ## Getting Started
+### Using npm
 
+```bash
+# install globally with npm
+npm i -g @andre_hrs/hayai-cli
+
+# Setting up working directory
+mkdir new_project && cd new_project
+```
+
+After you are inside the directory you can use the CLI commands
+
+### Using github clone
 ```bash
 # install dependencies
 bun install
 
-# (optional) link the CLI locally so `fast` and `hayai` are available globally
+# (optional) link the CLI locally so `fast` and `hayai` are available
 bun link
 
-# run the development server that ships with the templates
-bun run dev
-```
+# Setting up working directory
+mkdir new_project && cd new_project
 
-After linking, you can use the CLI in any project with:
+# link the dependency
+bun link @andre_hrs/hayai-cli
+```
+Don't worry about the prefilled package.json. You can safely overwrite it when using the initialization command.
+
+After linking, you can use the CLI in the project with:
 
 ```bash
 bunx fast <command>
@@ -46,12 +62,6 @@ or equivalently:
 
 ```bash
 bunx hayai <command>
-```
-
-To try it inside this repo without linking:
-
-```bash
-bunx ./src/cli/index.ts <command>
 ```
 
 ---
